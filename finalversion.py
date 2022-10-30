@@ -31,6 +31,10 @@ class Quiz:
 
         self.score = 0
 
+        self.max_quiz_number = 4
+
+        self.no_questions = 3
+
         self.selection_label = Label(self.menu_frame, text="Select Quiz", font="Helvetica 12", justify=CENTER, padx=10, pady=10)
         self.selection_label.grid(row=1)
 
@@ -111,7 +115,7 @@ class Quiz:
         self.question_list.clear()
         self.answers.clear()
         self.correct_answers.clear()
-        for i in range(2):
+        for i in range(self.no_questions):
             num1 = random.randint(1, 10)
             num2 = random.randint(1, 10)
 
@@ -182,7 +186,7 @@ class Quiz:
             self.history_button.config(state=NORMAL)
             self.question_label.configure(text="")
             self.start_button.config(state=DISABLED)
-            if self.quiz_number != 2:
+            if self.quiz_number != self.max_quiz_number:
                 self.addition_button.config(state=NORMAL)
                 self.subtraction_button.config(state=NORMAL)
                 self.multiplication_button.config(state=NORMAL)
@@ -247,7 +251,7 @@ class Results:
         self.heading_label = Label(self.results_frame, text="Questions, Correct Answers, Your Answers", justify=CENTER, pady=10, font="Helvetica 12")
         self.heading_label.grid(row=1)
 
-        self.quiz = Label(self.results_frame, text=quiz_history, justify=CENTER, font="Helvetica 12")
+        self.quiz = Label(self.results_frame, text=quiz_history, justify=CENTER, font="Helvetica 8")
         self.quiz.grid(row=2)
 
         self.back_button = Button(self.results_frame, text="Back", command=partial(self.close_results, partner), padx=5, pady=5, font="Helvetica 12")
