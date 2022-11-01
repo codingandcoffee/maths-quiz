@@ -1,20 +1,28 @@
+# import statements
 from tkinter import *
 from functools import partial
 import re
 import random
 
 
+# Main window
 class Menu:
     def __init__(self):
 
         self.menu_frame = Frame()
         self.menu_frame.grid()
+        
+        # Heading
 
         self.main_menu_label = Label(text="Main Maths Menu")
         self.main_menu_label.grid()
+        
+        # Selection label
 
         self.selection_label = Label(text="Select Quiz:")
         self.selection_label.grid()
+        
+        # Four operation buttons below
 
         self.addition_button = Button(text="+", command=lambda: self.generate_questions("Addition"))
         self.addition_button.grid()
@@ -30,13 +38,22 @@ class Menu:
 
         self.show_statistics_button = Button(text="Statistics")
         self.show_statistics_button.grid()
+        
+     # A function to randomly generate questions, to pass into the Quiz class
+    # It uses the selected operation and randonly generated numbers to add questions and correct answers to their respective lists.
 
     def generate_questions(self, operation):
+        # Question list
         question_list = []
+        # Corresponding correct answer list
         correct_answers = []
+        # Generates a certain number of questions, for testing purposes only two
         for i in range(2):
+            # Randomly generates two numbers between 1 and 10
             num1 = random.randint(1, 10)
             num2 = random.randint(1, 10)
+            
+            # Forms the question and calculates correct answer based on the numbers and selected operations.
 
             if operation == "Addition":
                 question = "{} + {} = ?".format(num1, num2)
@@ -51,21 +68,25 @@ class Menu:
                 correct_answer = num1 * num2
 
             else:
+                # The loop below ensures the the users do not get division questions with fractions/decimals as results.
                 while num1 % num2 != 0:
                     num1 = random.randint(1, 10)
                     num2 = random.randint(1, 10)
                 question = "{} / {} = ?".format(num1, num2)
                 correct_answer = num1 / num2
 
+            # Updates the lists
             question_list.append(question)
             correct_answers.append(correct_answer)
+            
+            # Passes the lists and operation into the Quiz class
 
         Quiz(self, operation, question_list, correct_answers)
 
 
 class Quiz:
     def __init__(self, partner, operation, question_list, correct_answers):
-
+        # Operations buttons on Main Menu disabled
         partner.addition_button.config(state=DISABLED)
         partner.subtraction_button.config(state=DISABLED)
         partner.multiplication_button.config(state=DISABLED)
@@ -76,12 +97,20 @@ class Quiz:
 
         self.quiz_frame = Frame(self.quiz_box)
         self.quiz_frame.grid()
+        
+        # The number of questions asked at any instant, initially zero
 
         self.question_number = 0
+        
+        # The number of correct (user) answers at any instant, initially zero
 
         self.correct_number = 0
+        
+        # Answers list which will contain user's answers
 
         self.answers = []
+        
+        # Shows which quiz it is
 
         self.operation_label = Label(self.quiz_frame, text="{} Quiz".format(operation))
         self.operation_label.grid()
