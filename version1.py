@@ -1,34 +1,48 @@
 # Main Menu, Version 1
 # The user selects an option, which successfully takes them to the appropriately-titled Quiz window
 
+# import statements
 from tkinter import *
 from functools import partial
 import re
 
-
+# Main window
 class Menu:
     def __init__(self):
         self.menu_frame = Frame()
         self.menu_frame.grid()
+        
+        # Heading
 
         self.main_menu_label = Label(text="Main Maths Menu")
         self.main_menu_label.grid()
+        
+        # Select operation heading
 
         self.selection_label = Label(text="Select Quiz:")
         self.selection_label.grid()
+        
+        # Addition button
 
         self.addition_button = Button(text="+", command=lambda: self.quiz("Addition"))
         self.addition_button.grid()
+        
+        # Subtraction button
 
         self.subtraction_button = Button(text="-", command=lambda: self.quiz("Subtraction"))
         self.subtraction_button.grid()
+        
+        # Multiplication button
 
         self.multiplication_button = Button(text="x", command=lambda: self.quiz("Multiplication"))
         self.multiplication_button.grid()
+        
+        # Division button
 
         self.division_button = Button(text="/", command=lambda: self.quiz("Division"))
         self.division_button.grid()
 
+     # Opens the Quiz window once operation has been selected, passing the operation into the Quiz class
 
     def quiz(self, operation):
         # print(operation)
@@ -38,6 +52,7 @@ class Menu:
 class Quiz:
     def __init__(self, partner, operation):
 
+        # Operation buttons disabled
         partner.addition_button.config(state=DISABLED)
         partner.subtraction_button.config(state=DISABLED)
         partner.multiplication_button.config(state=DISABLED)
@@ -48,6 +63,8 @@ class Quiz:
 
         self.quiz_frame = Frame(self.quiz_box)
         self.quiz_frame.grid()
+        
+        # Shows which quiz it is
 
         self.operation_label = Label(self.quiz_frame, text="{}".format(operation))
         self.operation_label.grid()
@@ -55,7 +72,7 @@ class Quiz:
         self.quit_button = Button(self.quiz_frame, text="Quit", command=partial(self.close_quiz, partner))
         self.quit_button.grid()
 
-    # The close_history function closes the History window when "dismissed" and the export function is also called below.
+    # The close_quiz function closes the Quiz window when "dismissed".
 
     def close_quiz(self, partner):
         partner.addition_button.config(state=NORMAL)
