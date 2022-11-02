@@ -1,3 +1,5 @@
+# Exactly the same as reassemble.py, except with a limit to the max number of quizzes that can be completed.
+
 from tkinter import *
 from functools import partial
 import re
